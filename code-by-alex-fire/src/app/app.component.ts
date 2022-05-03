@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Task } from './task/task';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'code-by-alex-fire';
+  todo: Task[] = [
+    {
+      title: 'Buy milk',
+      description: 'Go to the store and buy milk'
+    },
+    {
+      title: 'Create a Code-By-Alex app',
+      description: 'Using Firebase and Angular create a Code-By-Alex app!'
+    }
+  ]
+  inProgress: Task[] = [];
+  done: Task[] = [];
+
+  editTask(list: string, task: Task): void {}
+
+  drop(event: CdkDragDrop<Task[]>): void {
+    if (event.previousContainer === event.container) {
+      return;
+    }
+    if (!event.container.data || !event.previousContainer.data) {
+      return;
+    }
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
 }
