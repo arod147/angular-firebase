@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "code-by-alex": {
+      "hosting": {
+        "code-by-alex-fire": [
+          "code-by-alex"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "code-by-alex"
+  }
+}
