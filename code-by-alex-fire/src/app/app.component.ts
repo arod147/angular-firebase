@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from './task/task';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDialogComponent, TaskDialogResult } from './task-dialog/task-dialog.component';
-import { Firestore } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, DocumentData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +25,29 @@ export class AppComponent {
   inProgress: Task[] = [];
   done: Task[] = [];
 
-  
+  // x: Observable<Task[]>
+  constructor(private dialog: MatDialog, private store: Firestore) {
+    // const collect = collection(this.store, 'items')
+    // const x = collectionData(collect) as Observable<Task[]>;
+  }
 
+  // todo = collectionData(collection(this.store, 'todo'), {idField: 'id'}) as Observable<Task[]>
+
+  // todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+  // inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+  // done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+
+  // y() {
+  //   const collect = collection(this.store, 'items')
+  //   const x = collectionData(collect) as Observable<Task[]>;;
+  //   x.forEach((item) => console.log(item))
+  //   // console.log(x.subscribe())
+  // }
+
+  // ngOnInit(): void {
+  //   this.y()
+  // }
+  
   editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '270px',
@@ -62,8 +84,6 @@ export class AppComponent {
       event.currentIndex
     );
   }
-
-  constructor(private dialog: MatDialog, store: Firestore) {}
 
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
